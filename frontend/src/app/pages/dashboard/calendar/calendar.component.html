@@ -1,0 +1,41 @@
+<div class="bg-white shadow rounded-lg p-6">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Content Calendar</h2>
+        <div class="flex space-x-2">
+            <button class="px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600">&lt; Prev</button>
+            <span class="font-medium text-lg px-2">November 2025</span>
+            <button class="px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600">Next &gt;</button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-7 gap-px bg-gray-200 border border-gray-200 rounded-lg overflow-hidden">
+        <!-- Days Header -->
+        <div class="bg-gray-50 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Sun</div>
+        <div class="bg-gray-50 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Mon</div>
+        <div class="bg-gray-50 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Tue</div>
+        <div class="bg-gray-50 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Wed</div>
+        <div class="bg-gray-50 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Thu</div>
+        <div class="bg-gray-50 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Fri</div>
+        <div class="bg-gray-50 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Sat</div>
+
+        <!-- Calendar Grid -->
+        <div *ngFor="let day of calendarDays" [class.bg-white]="day.isCurrentMonth"
+            [class.bg-gray-50]="!day.isCurrentMonth"
+            class="min-h-[120px] p-2 relative hover:bg-gray-50 transition-colors">
+            <span [class.text-gray-900]="day.isCurrentMonth" [class.text-gray-400]="!day.isCurrentMonth"
+                class="text-sm font-medium">{{ day.date | date:'d' }}</span>
+
+            <!-- Scheduled Posts -->
+            <div class="mt-2 space-y-1">
+                <div *ngFor="let post of day.posts" class="text-xs p-1 rounded truncate cursor-pointer" [ngClass]="{
+               'bg-blue-100 text-blue-700': post.platform === 'TWITTER',
+               'bg-blue-200 text-blue-800': post.platform === 'FACEBOOK',
+               'bg-blue-50 text-blue-600': post.platform === 'LINKEDIN',
+               'bg-pink-100 text-pink-700': post.platform === 'INSTAGRAM'
+             }">
+                    {{ post.time }} - {{ post.title }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
